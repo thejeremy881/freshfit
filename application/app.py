@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+#Global Data Storage
 meal_logs = []
 meal_totals = {"Breakfast": 0, "Lunch": 0, "Dinner": 0, "Snacks": 0}
 challenges = [
@@ -15,6 +16,7 @@ leaderboard = [
     {"name": "Taylor", "points": 90}
 ]
 
+#The Home Routes
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -58,6 +60,18 @@ def challenges_page():
                     challenge['progress'] += 10
 
     return render_template('challenges.html', challenges=challenges, leaderboard=leaderboard)
+
+@app.route('/progress')
+def progress():
+    return render_template('progress.html')
+
+@app.route('/community')
+def community():
+    return render_template('community.html')
+
+@app.route('/settings')
+def settings():
+    return render_template('settings.html')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

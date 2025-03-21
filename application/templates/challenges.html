@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Challenges</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#121212] text-white p-6 pb-24">
+  <h1 class="text-3xl font-semibold text-orange-400 mb-6">🔥 Community Challenges</h1>
+  <form method="POST" class="space-y-4">
+    {% for challenge in challenges %}
+      <div class="bg-[#1e1e1e] p-5 rounded-xl shadow-lg flex flex-col space-y-3">
+        <div class="flex justify-between items-center">
+          <span class="text-gray-200 text-lg font-semibold">{{ challenge.name }}</span>
+          {% if challenge.joined %}
+            <span class="text-green-400 font-semibold flex items-center">✅ Joined</span>
+          {% else %}
+            <button name="challenge" value="{{ challenge.name }}" class="bg-orange-500 hover:bg-orange-600 text-white py-1 px-3 rounded-lg text-sm">Join</button>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </form>
+  <h2 class="text-2xl font-semibold text-yellow-400 mt-10">🏆 Leaderboard</h2>
+  <ul class="space-y-2 mt-3">
+    {% for user in leaderboard %}
+      <li class="bg-[#1e1e1e] p-4 rounded-xl text-sm text-gray-300">🏅 {{ user.name }} - {{ user.points }} pts</li>
+    {% endfor %}
+  </ul>
+  {% include 'nav.html' %}
+</body>
+</html>

@@ -1,0 +1,19 @@
+
+:root {
+  --background: #121212;
+  --card-bg: #1e1e1e;
+  --accent: #ff6ec7;
+  --secondary-accent: #00ffe5;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --radius: 20px;
+  --transition: all 0.3s ease;
+}
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+...

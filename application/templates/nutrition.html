@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nutrition Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#121212] text-white p-6 pb-24">
+  <h1 class="text-3xl font-semibold text-green-400 mb-6">🍎 Nutrition Tracker</h1>
+  <form method="POST" class="mb-6">
+    <div class="flex flex-col gap-4">
+      <select name="category" required class="p-3 rounded-xl bg-[#1e1e1e] text-white">
+        <option value="Breakfast">🍳 Breakfast</option>
+        <option value="Lunch">🥗 Lunch</option>
+        <option value="Dinner">🍛 Dinner</option>
+        <option value="Snacks">🍪 Snacks</option>
+      </select>
+      <input type="text" name="meal" placeholder="What did you eat?" required class="p-3 rounded-xl bg-[#1e1e1e] text-white placeholder-gray-400">
+      <input type="number" name="calories" placeholder="Calories" required class="p-3 rounded-xl bg-[#1e1e1e] text-white placeholder-gray-400">
+      <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-xl">Add Meal</button>
+    </div>
+  </form>
+  <form method="POST">
+    <button name="reset" value="true" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg">
+      Reset Daily Calories 🔄
+    </button>
+  </form>
+  <h2 class="text-lg font-semibold text-gray-300 mt-4">Total Calories Today: 
+    <span class="text-green-400">{{ total_calories if total_calories else 0 }} kcal</span>
+  </h2>
+  <h2 class="text-xl font-semibold text-gray-300 mt-4">📋 Logged Meals</h2>
+  {% if meals %}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+      {% for meal in meals %}
+        <div class="bg-[#1e1e1e] p-4 rounded-xl shadow-lg flex items-center space-x-4">
+          <div class="text-2xl">
+            {% if meal.category == "Breakfast" %}🍳{% elif meal.category == "Lunch" %}🥗{% elif meal.category == "Dinner" %}🍛{% else %}🍪{% endif %}
+          </div>
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-gray-200">{{ meal.meal }}</h3>
+            <p class="text-sm text-gray-400">{{ meal.category }} | 🔥 {{ meal.calories }} kcal</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-gray-400 mt-4">No meals logged yet. Start adding some! 🍽️</p>
+  {% endif %}
+  {% include 'nav.html' %}
+</body>
+</html>

@@ -23,7 +23,7 @@
     <section class="bg-[#1e1e1e] p-6 rounded-xl shadow-xl">
       <h2 class="text-2xl font-bold text-orange-400 mb-4">🏁 Virtual Challenge: Step Sprint</h2>
       <p class="mb-2 text-gray-300">Join our 3-day step challenge — hit 8,000+ steps daily!</p>
-      <button class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded">Join Challenge</button>
+      <button id="joinChallengeButton" class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded" onclick="toggleChallenge()">Join Challenge</button>
     </section>
 
     <section class="bg-[#1e1e1e] p-6 rounded-xl shadow-xl">
@@ -43,34 +43,24 @@
   {% include 'nav.html' %}
 
   <script>
-    const ctx = document.getElementById('progressChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        datasets: [{
-          label: 'Workouts Completed',
-          data: [1, 1, 0, 1, 1, 0, 1],
-          borderColor: '#ff4081',
-          backgroundColor: 'rgba(255, 64, 129, 0.2)',
-          tension: 0.4
-        }]
-      },
-      options: {
-        plugins: { legend: { labels: { color: 'white' } } },
-        scales: {
-          x: { ticks: { color: 'white' } },
-          y: { ticks: { color: 'white' }, beginAtZero: true }
-        }
+    function toggleChallenge() {
+      const joinButton = document.getElementById('joinChallengeButton');
+  
+      if (joinButton.textContent === 'Join Challenge') {
+        // User is joining the challenge
+        alert('Challenge Joined!');
+        joinButton.textContent = 'Challenge Joined!';
+        joinButton.classList.remove('bg-orange-500', 'hover:bg-orange-600'); // Remove original colors
+        joinButton.classList.add('bg-green-500', 'hover:bg-green-600'); // Change button color to green
+      } else {
+        // User is unjoining the challenge
+        alert('Challenge Unjoined!');
+        joinButton.textContent = 'Join Challenge';
+        joinButton.classList.remove('bg-green-500', 'hover:bg-green-600'); // Remove green colors
+        joinButton.classList.add('bg-orange-500', 'hover:bg-orange-600'); // Restore original colors
       }
-    });
-
-    function adjustFontSize(change) {
-      const body = document.body;
-      const style = window.getComputedStyle(body);
-      const currentSize = parseFloat(style.fontSize);
-      body.style.fontSize = (currentSize + change) + 'px';
     }
   </script>
+  
 </body>
 </html>

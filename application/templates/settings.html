@@ -11,26 +11,20 @@
     <h1 class="text-3xl font-semibold mb-4 text-gray-100">⚙️ Settings</h1>
     <p class="mb-6 text-gray-300">Customize your experience</p>
 
-    <form class="space-y-4 text-gray-200">
+    <form method="POST" class="space-y-4 text-gray-200">
       <label class="block">
-        <input type="checkbox" class="mr-2" /> Enable Workout Reminders
+        <input type="checkbox" name="workout_reminders" class="mr-2" {% if settings.workout_reminders %} checked {% endif %}/> Enable Workout Reminders
       </label>
       <label class="block">
-        <input type="checkbox" checked class="mr-2" /> Dark Mode (Always On)
+        <input type="checkbox" name="dark_mode" class="mr-2" {% if settings.dark_mode %} checked {% endif %}/> Dark Mode (Always On)
       </label>
       <label class="block">
-        <input type="checkbox" class="mr-2" /> Weekly Progress Emails
+        <input type="checkbox" name="progress_emails" class="mr-2" {% if settings.progress_emails %} checked {% endif %}/> Weekly Progress Emails
       </label>
-      <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg">Save Settings</button>
+      <button type="submit" class="mt-4 bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg">Save Settings</button>
     </form>
   </div>
 
   {% include 'nav.html' %}
 </body>
 </html>
-
-
-
-
-
-

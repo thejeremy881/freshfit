@@ -14,8 +14,13 @@
         <div class="flex justify-between items-center">
           <span class="text-gray-200 text-lg font-semibold">{{ challenge.name }}</span>
           {% if challenge.joined %}
-            <span class="text-green-400 font-semibold flex items-center">✅ Joined</span>
+            <!-- If the challenge is joined, show the "Unjoin" button -->
+            <div class="flex items-center space-x-2">
+              <span class="text-green-400 font-semibold flex items-center">✅ Joined</span>
+              <button name="challenge" value="{{ challenge.name }}" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-lg text-sm">Unjoin</button>
+            </div>
           {% else %}
+            <!-- If the challenge is not joined, show the "Join" button -->
             <button name="challenge" value="{{ challenge.name }}" class="bg-orange-500 hover:bg-orange-600 text-white py-1 px-3 rounded-lg text-sm">Join</button>
           {% endif %}
         </div>

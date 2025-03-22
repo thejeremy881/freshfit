@@ -16,10 +16,60 @@ leaderboard = [
     {"name": "Taylor", "points": 90}
 ]
 
+user_profile = {}
+
+#Here, I will code a Workout Plan Generator
+def generate_workout_plan(profile):
+    if not profile:
+        return "Full-body strength | 30 mins"
+    
+    goal = profile.get("goal")
+    level = profile.get("fitness_level")
+    equipment = profile.get("equipment")
+
+    # Simple rule-based logic
+    if goal == "Lose Weight":
+        if equipment == "None":
+            return "HIIT + Bodyweight Circuit | 25 mins"
+        else:
+            return "Cardio & Weights Split | 30 mins"
+    elif goal == "Build Muscle":
+        if level == "Beginner":
+            return "Upper/Lower Split | Dumbbells | 35 mins"
+        else:
+            return "Push/Pull/Legs | Gym Machines | 45 mins"
+    elif goal == "Get Toned":
+        return "Full-body Sculpt + Core | 30 mins"
+
+    return "General Fitness | 30 mins"
+
 #The Home Routes
 @app.route('/')
 def home():
-    return render_template('index.html')
+    workout_plan = generate_workout_plan(user_profile)
+    return render_template('index.html', profile=user_profile, workout_plan=workout_plan)
+
+@app.route('/setup', methods=['GET', 'POST'])
+def setup():
+    global user_profile
+
+    if request.method == 'POST':
+        fitness_level = request.form.get('fitness_level')
+        goal = request.form.get('goal')
+        equipment = request.form.get('equipment')
+
+        user_profile = {
+            "fitness_level": fitness_level,
+            "goal": goal,
+            "equipment": equipment,
+        }
+
+        #Call the function correctly
+        workout_plan = generate_workout_plan(user_profile)
+
+        return render_template('index.html', profile=user_profile, workout_plan=workout_plan)
+
+    return render_template('setup.html')
 
 @app.route('/nutrition', methods=['GET', 'POST'])
 def nutrition():

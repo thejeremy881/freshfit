@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Setup Quiz</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#121212] text-white p-6 pb-24">
+  <div class="max-w-xl mx-auto bg-[#1e1e1e] p-6 rounded-xl shadow-lg">
+    <h1 class="text-2xl font-semibold text-pink-400 mb-4">🎯 Set Up Your Fitness Plan</h1>
+    <form method="POST" class="space-y-4">
+      <div>
+        <label class="block mb-1 text-gray-300">Fitness Level</label>
+        <select name="fitness_level" class="w-full p-2 rounded bg-[#2c2c2c] text-white">
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+      </div>
+      <div>
+        <label class="block mb-1 text-gray-300">Goal</label>
+        <select name="goal" class="w-full p-2 rounded bg-[#2c2c2c] text-white">
+          <option value="Lose Weight">Lose Weight</option>
+          <option value="Build Muscle">Build Muscle</option>
+          <option value="Get Toned">Get Toned</option>
+        </select>
+      </div>
+      <div>
+        <label class="block mb-1 text-gray-300">Equipment Available</label>
+        <select name="equipment" class="w-full p-2 rounded bg-[#2c2c2c] text-white">
+          <option value="None">None</option>
+          <option value="Dumbbells">Dumbbells</option>
+          <option value="Full Gym">Full Gym</option>
+        </select>
+      </div>
+      <button type="submit" class="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded text-white">Save & Continue</button>
+    </form>
+  </div>
+  {% include 'nav.html' %}
+</body>
+</html>

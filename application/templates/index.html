@@ -2,16 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Fitness App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreshFit Fitness App</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-[#121212] text-white p-6 pb-24 font-poppins">
-  <h1 class="text-3xl font-semibold mb-6 text-pink-400">Welcome Back, Cassandra 💪</h1>
-  <div class="bg-[#1e1e1e] rounded-2xl shadow-lg p-5 mb-4 hover:shadow-pink-300/40 transition-transform hover:-translate-y-1 cursor-pointer">
-    <h2 class="text-xl text-[#00ffe5] font-medium mb-2">Today's Workout</h2>
-    <p class="text-gray-400 text-sm">Full-body strength | 30 mins</p>
+  <h1 class="text-3xl font-semibold mb-2 text-pink-400">Welcome Back, Cassandra 💪</h1>
+  <p class="text-gray-400 mb-6">Let’s crush it today! 🔥</p>
+
+  <!-- Dynamic Workout Card -->
+  <div class="bg-[#1e1e1e] rounded-2xl shadow-lg p-5 mb-4 hover:shadow-pink-300/40 transition-transform hover:-translate-y-1 cursor-pointer border border-pink-400">
+    <div class="flex items-center justify-between">
+      <div>
+        {% if profile %}
+          <h2 class="text-xl text-[#00ffe5] font-medium mb-2">Today's Workout ({{ profile.fitness_level }})</h2>
+          <p class="text-gray-400 text-sm">
+            Goal: {{ profile.goal }} | Equipment: {{ profile.equipment }}
+          </p>
+          <p class="text-pink-300 text-sm mt-1 italic">
+            Recommended: {{ workout_plan }}
+          </p>
+        {% else %}
+          <h2 class="text-xl text-[#00ffe5] font-medium mb-2">Today's Workout</h2>
+          <p class="text-gray-400 text-sm">Full-body strength | 30 mins</p>
+          <p class="text-pink-300 text-sm mt-1 italic">
+            <a href="{{ url_for('setup') }}" class="underline hover:text-pink-400">Set up your fitness profile</a> to get personalized workouts!
+          </p>
+        {% endif %}
+      </div>
+      <img src="https://media.giphy.com/media/XreQmk7ETCak0/giphy.gif" alt="Workout" class="w-12 h-12 rounded-full shadow-md">
+    </div>
+    <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-xl">Start Workout</button>
   </div>
+
+  <!-- Weekly Progress Snapshot -->
+  <div class="bg-[#1e1e1e] rounded-xl p-4 mb-4">
+    <p class="text-sm text-green-400 mb-1">📈 This Week</p>
+    <p class="text-gray-300 text-sm">3/5 workouts completed</p>
+  </div>
+
+  <!-- Daily Tip -->
+  <div class="bg-[#1e1e1e] rounded-xl p-4 text-sm text-gray-300 italic shadow-inner">
+    💡 Tip of the Day: Stay hydrated — aim for 8 cups of water!
+  </div>
+
   {% include 'nav.html' %}
 </body>
 </html>
+

@@ -123,15 +123,16 @@ def nutrition():
 @app.route('/challenges', methods=['GET', 'POST'])
 def challenges_page():
     if request.method == 'POST':
-        challenge_name = request.form.get('challenge')
-        update_challenge = request.form.get('update_challenge')
-
+        challenge_name = request.form.get('challenge')  # Get the challenge name
+        # Find the challenge in the list
         for challenge in challenges:
             if challenge['name'] == challenge_name:
-                challenge['joined'] = True
-            if update_challenge and challenge['name'] == update_challenge:
-                if challenge['progress'] < 100:
-                    challenge['progress'] += 10
+                # If the challenge is already joined, unjoin it, otherwise join it
+                if challenge['joined']:
+                    challenge['joined'] = False  # Unjoin
+                else:
+                    challenge['joined'] = True  # Join
+                break  # Exit the loop once we update the challenge
 
     return render_template('challenges.html', challenges=challenges, leaderboard=leaderboard)
 

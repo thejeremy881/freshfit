@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
+from datetime import datetime #Import datetime module
 
 app = Flask(__name__)
 
@@ -18,9 +19,20 @@ leaderboard = [
     {"name": "Taylor", "points": 90}
 ]
 
+# Activity Feed
+activity_feed = []
+last_reset_date = None
+
 user_profile = {}
 
 workout_data = {"count": 3}
+
+# Default settings (this could be stored in a database or file in a more complex app)
+DEFAULT_SETTINGS = {
+    'workout_reminders': False,
+    'dark_mode': True,
+    'progress_emails': False
+}
 
 #Here, I will code a Workout Plan Generator
 def generate_workout_plan(profile):
@@ -140,13 +152,68 @@ def challenges_page():
 def progress():
     return render_template('progress.html', workouts_completed=workout_data["count"])
 
-@app.route('/community')
+@app.route('/community', methods=['GET', 'POST'])
 def community():
-    return render_template('community.html')
+    global activity_feed, last_reset_date
 
-@app.route('/settings')
+    # Get the current date
+    current_date = datetime.now().date()
+
+    # Check if we need to reset the activity feed
+    if last_reset_date != current_date:
+        # Reset the activity feed if the date has changed
+        activity_feed = []
+        last_reset_date = current_date
+        print(f"Activity feed reset on {current_date}")  # Debugging statement
+
+    # Handle POST request for new posts
+    if request.method == 'POST':
+        post_message = request.form.get('post')
+        if post_message:
+            # Generate current timestamp
+            timestamp = datetime.now().strftime('%Y-%m-%d %I:%M %p')  # Format the timestamp
+
+            # Generate a new id for the post based on the length of the feed (simple unique id)
+            if activity_feed:
+                new_id = max(post['id'] for post in activity_feed) + 1
+            else:
+                new_id = 1  # Start from 1 if no posts exist yet
+
+            # Save the new post to activity feed
+            activity_feed.append({
+                "id": new_id,  # Assign unique id to each post
+                "user": "Current User",  # Replace with actual logged-in user
+                "message": post_message,
+                "timestamp": timestamp
+            })
+
+    # Debugging: Print out the current activity_feed before rendering
+    print(f"Activity Feed before rendering: {activity_feed}")
+
+    # Render the updated activity feed in the template
+    return render_template('community.html', activity_feed=activity_feed)
+
+
+@app.route('/settings', methods=['GET', 'POST'])
 def settings():
-    return render_template('settings.html')
+    # Load current settings (from session or defaults)
+    settings = session.get('settings', DEFAULT_SETTINGS)
+
+    if request.method == 'POST':
+        # Save the user's settings from the form submission
+        settings['workout_reminders'] = 'workout_reminders' in request.form
+        settings['dark_mode'] = 'dark_mode' in request.form
+        settings['progress_emails'] = 'progress_emails' in request.form
+
+        # Save settings to session
+        session['settings'] = settings
+
+        # Redirect back to the settings page to see changes
+        return redirect(url_for('settings'))
+
+    # Render the settings page with the current settings
+    return render_template('settings.html', settings=settings)
+
 
 @app.route('/bonus')
 def bonus():

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bonus Features</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-[#121212] text-white p-6 pb-24">
+  <div class="max-w-3xl mx-auto space-y-10">
+    <section class="bg-[#1e1e1e] p-6 rounded-xl shadow-xl">
+      <h1 class="text-2xl font-bold mb-4 text-pink-400">🥗 Beginner Nutrition Tips</h1>
+      <ul class="list-disc ml-6 space-y-2 text-gray-300">
+        <li>Eat balanced meals with lean proteins, whole grains, and veggies</li>
+        <li>Stay hydrated — aim for 8+ cups of water a day</li>
+        <li>Limit processed foods and sugary snacks</li>
+        <li>Track your meals to build better awareness</li>
+      </ul>
+    </section>
+
+    <section class="bg-[#1e1e1e] p-6 rounded-xl shadow-xl">
+      <h2 class="text-2xl font-bold text-orange-400 mb-4">🏁 Virtual Challenge: Step Sprint</h2>
+      <p class="mb-2 text-gray-300">Join our 3-day step challenge — hit 8,000+ steps daily!</p>
+      <button class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded">Join Challenge</button>
+    </section>
+
+    <section class="bg-[#1e1e1e] p-6 rounded-xl shadow-xl">
+      <h2 class="text-2xl font-bold mb-4 text-green-400">📊 Weekly Progress Tracker</h2>
+      <canvas id="progressChart" height="100"></canvas>
+    </section>
+
+    <section class="bg-[#1e1e1e] p-6 rounded-xl shadow-xl">
+      <h2 class="text-2xl font-bold mb-4 text-blue-400">🛠️ Accessibility Options</h2>
+      <div class="space-x-4">
+        <button onclick="adjustFontSize(1)" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">A+</button>
+        <button onclick="adjustFontSize(-1)" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">A-</button>
+      </div>
+    </section>
+  </div>
+
+  {% include 'nav.html' %}
+
+  <script>
+    const ctx = document.getElementById('progressChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+          label: 'Workouts Completed',
+          data: [1, 1, 0, 1, 1, 0, 1],
+          borderColor: '#ff4081',
+          backgroundColor: 'rgba(255, 64, 129, 0.2)',
+          tension: 0.4
+        }]
+      },
+      options: {
+        plugins: { legend: { labels: { color: 'white' } } },
+        scales: {
+          x: { ticks: { color: 'white' } },
+          y: { ticks: { color: 'white' }, beginAtZero: true }
+        }
+      }
+    });
+
+    function adjustFontSize(change) {
+      const body = document.body;
+      const style = window.getComputedStyle(body);
+      const currentSize = parseFloat(style.fontSize);
+      body.style.fontSize = (currentSize + change) + 'px';
+    }
+  </script>
+</body>
+</html>

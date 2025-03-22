@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash
 
 app = Flask(__name__)
+
+app.secret_key = "hackMISSO"
 
 #Global Data Storage
 meal_logs = []
@@ -17,6 +19,8 @@ leaderboard = [
 ]
 
 user_profile = {}
+
+workout_data = {"count": 3}
 
 #Here, I will code a Workout Plan Generator
 def generate_workout_plan(profile):
@@ -47,7 +51,27 @@ def generate_workout_plan(profile):
 @app.route('/')
 def home():
     workout_plan = generate_workout_plan(user_profile)
-    return render_template('index.html', profile=user_profile, workout_plan=workout_plan)
+    return render_template(
+        'index.html', 
+        profile=user_profile, 
+        workout_plan=workout_plan,
+        workouts_completed=workout_data["count"]
+    )
+
+@app.route('/start-workout')
+def start_workout():
+    if workout_data["count"] < 5:
+        workout_data["count"] += 1
+        flash("Workout has been completed!")
+    else:
+        flash("You've already completed 5 workouts this week!")
+    return redirect(url_for('home'))
+
+@app.route('/reset-workouts', methods=['POST'])
+def reset_workouts():
+    workout_data["count"] = 0
+    flash("Weekly workout count has been reset.")
+    return redirect(url_for('progress'))
 
 @app.route('/setup', methods=['GET', 'POST'])
 def setup():
@@ -113,7 +137,7 @@ def challenges_page():
 
 @app.route('/progress')
 def progress():
-    return render_template('progress.html')
+    return render_template('progress.html', workouts_completed=workout_data["count"])
 
 @app.route('/community')
 def community():

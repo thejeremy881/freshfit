@@ -8,6 +8,17 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-[#121212] text-white p-6 pb-24 font-poppins">
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="mb-4 text-sm text-pink-300">
+        {% for msg in messages %}
+          <p>{{ msg }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
   <h1 class="text-3xl font-semibold mb-2 text-pink-400">Welcome Back, Cassandra 💪</h1>
   <p class="text-gray-400 mb-6">Let’s crush it today! 🔥</p>
 
@@ -33,13 +44,17 @@
       </div>
       <img src="https://media.giphy.com/media/XreQmk7ETCak0/giphy.gif" alt="Workout" class="w-12 h-12 rounded-full shadow-md">
     </div>
-    <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-xl">Start Workout</button>
+    <a href="{{ url_for('start_workout') }}">
+      <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-xl">
+        Start Workout
+      </button>
+    </a>    
   </div>
 
   <!-- Weekly Progress Snapshot -->
   <div class="bg-[#1e1e1e] rounded-xl p-4 mb-4">
     <p class="text-sm text-green-400 mb-1">📈 This Week</p>
-    <p class="text-gray-300 text-sm">3/5 workouts completed</p>
+    <p class="text-gray-300 text-sm">{{ workouts_completed }}/5 workouts completed</p>
   </div>
 
   <!-- Daily Tip -->

@@ -16,7 +16,14 @@
       <div class="bg-pink-500 h-full rounded-full" style="width: 60%;"></div>
     </div>
     <p class="text-sm text-pink-300">🔥 Keep pushing forward! You're making great progress!</p>
-  </div>
+
+  <!-- Reset Button Form -->
+  <form action="{{ url_for('reset_workouts') }}" method="POST">
+    <button class="mt-4 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-xl">
+      🔁 Reset Weekly Workouts
+    </button>
+  </form>
+</div>
 
   {% include 'nav.html' %}
 </body>

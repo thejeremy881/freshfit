@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Progress</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Progress</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>📊 Your Progress</h1>
-    <p>Track your fitness progress here!</p>
+<body class="bg-[#121212] text-white p-6 pb-24">
+  <div class="bg-[#1e1e1e] p-6 rounded-xl shadow-xl max-w-2xl mx-auto">
+    <h1 class="text-3xl font-semibold mb-4">📊 Your Fitness Progress</h1>
+    <p class="text-lg text-gray-300 mb-2">Workout Streak</p>
+    <p class="mb-2">You've completed <strong>10 workouts</strong> this month!</p>
+    <div class="w-full h-3 bg-gray-700 rounded-full mb-4">
+      <div class="bg-pink-500 h-full rounded-full" style="width: 60%;"></div>
+    </div>
+    <p class="text-sm text-pink-300">🔥 Keep pushing forward! You're making great progress!</p>
+  </div>
+
+  {% include 'nav.html' %}
 </body>
 </html>
+
+
+
+
+

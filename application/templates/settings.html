@@ -1,13 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="UTF-8" />
+  <title>Settings</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>⚙ Settings</h1>
-    <p>Manage your preferences here.</p>
+<body class="bg-[#121212] text-white p-6 pb-24">
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-3xl font-semibold mb-4 text-gray-100">⚙️ Settings</h1>
+    <p class="mb-6 text-gray-300">Customize your experience</p>
+
+    <form class="space-y-4 text-gray-200">
+      <label class="block">
+        <input type="checkbox" class="mr-2" /> Enable Workout Reminders
+      </label>
+      <label class="block">
+        <input type="checkbox" checked class="mr-2" /> Dark Mode (Always On)
+      </label>
+      <label class="block">
+        <input type="checkbox" class="mr-2" /> Weekly Progress Emails
+      </label>
+      <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg">Save Settings</button>
+    </form>
+  </div>
+
+  {% include 'nav.html' %}
 </body>
 </html>
+
+
+
+
+
+
